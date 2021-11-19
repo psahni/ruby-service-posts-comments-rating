@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 40
+  host: 127.0.0.1
+  port: 5432
+  password: root
+  
+development:
+  <<: *default
+  database: umai_dev
+  username: postgres
+  
+test:
+  <<: *default
+  database: umai_test
+  username: postgres
+  

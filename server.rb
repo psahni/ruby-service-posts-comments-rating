@@ -1,4 +1,5 @@
 require 'rack'
+require 'json'
 handler = Rack::Handler::Thin
 
 class RackApp
@@ -12,8 +13,11 @@ end
 class Heartbeat
 	def self.call(env)
 		req = Rack::Request.new(env)
-		p req.get?
-		[200, { "Content-Type" => "text/plain" }, ["OK Bhai"]]
+		if req.get?
+			[200, { "Content-Type" => "text/plain" }, ["OK Bhai"]]
+		else
+			[200, { "Content-Type" => "application/json" }, [JSON.generate({name: 'Prashant'})]] 
+		end	
 	end
 end
 
