@@ -1,5 +1,8 @@
 require 'rack'
 require 'json'
+
+require './src/services/post_service'
+
 handler = Rack::Handler::Thin
 
 class RackApp
@@ -9,23 +12,11 @@ class RackApp
 	end
 end
 
-
-class Heartbeat
-	def self.call(env)
-		req = Rack::Request.new(env)
-		if req.get?
-			[200, { "Content-Type" => "text/plain" }, ["OK Bhai"]]
-		else
-			[200, { "Content-Type" => "application/json" }, [JSON.generate({name: 'Prashant'})]] 
-		end	
-	end
-end
-
 app = Rack::Builder.new do |builder|
   builder.use Rack::CommonLogger
 		map "/posts" do
 			use Rack::Lint
-			run Heartbeat
+			run PostService
 		end
 		
 		map '/' do
