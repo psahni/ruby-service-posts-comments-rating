@@ -42,5 +42,11 @@ class Post  < ActiveRecord::Base
     self.ratings_count = self.ratings_count + 1
     self
   end
-  
+
+  def self.with_transaction(&block)
+    ActiveRecord::Base.transaction(isolation: :read_committed) do
+      block.call
+    end
+  end
 end
+

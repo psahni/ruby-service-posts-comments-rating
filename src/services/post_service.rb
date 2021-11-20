@@ -8,7 +8,7 @@ class PostService
       post = Post.where(['id = ?', req.params['id']]).first;
       if post && req.get?
         return [200, Constants::CONTENT_TYPE, [post.to_json]] 
-      else
+      elseq
         return [404, Constants::CONTENT_TYPE, [JSON.generate({ status: 404, errors: 'Post not found'})]]
       end
     end
