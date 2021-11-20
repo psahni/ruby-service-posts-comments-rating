@@ -16,12 +16,17 @@ class PostService
     if req.params['top']
       return req.get? ? respond_with_top_posts(req.params['top']) : bad_request
     end
+
+    # GET TOP POSTs /posts?group_by=ip
+    if req.params['group_by']
+      return req.get? ? respond_with_grouped_by(req.params['group_by']) : bad_request
+    end
     # GET POSTS /posts
     if req.get?
       return [200, Constants::CONTENT_TYPE, [Post.all.to_json]]
     else
       # CREATE POST /posts
-      post = Post.new(req.params)
+      post = Post.new(req.params.merge({ip: req.ip}))
       if post.save
         return respond_with_post(post)
       else 
@@ -35,6 +40,15 @@ class PostService
       [200, Constants::CONTENT_TYPE, [Post.top_posts(top).to_json]] 
     end
     
+    def respond_with_grouped_by(group_by)
+      case group_by
+      when 'ip'
+        return [200, Constants::CONTENT_TYPE, [Post.grouped_by_ip.to_json]] 
+      else
+        return [200, Constants::CONTENT_TYPE, [[].to_json]] 
+      end
+    end
+
     def respond_with_post(post)
       [200, Constants::CONTENT_TYPE, [post.to_json]]
     end

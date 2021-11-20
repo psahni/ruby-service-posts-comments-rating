@@ -53,5 +53,14 @@ class Post < ActiveRecord::Base
     return [] if top.blank? or top.to_i == 0
     select("id, content, ROUND((ratings_sum+0.0)/(ratings_count+0.0), 1) as avg_rating").order("avg_rating DESC").limit(top)
   end
+
+  def self.grouped_by_ip
+    grouped_data = {};
+    posts = Post.select("ip, username");
+    posts.each do |post|
+      grouped_data[post.ip] = (grouped_data[post.ip] || []).push(post.username)
+    end
+    grouped_data
+  end
 end
 
