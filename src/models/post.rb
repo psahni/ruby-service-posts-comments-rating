@@ -48,5 +48,10 @@ class Post < ActiveRecord::Base
       block.call
     end
   end
+
+  def self.top_posts(top)
+    return [] if top.blank? or top.to_i == 0
+    select("id, content, ROUND((ratings_sum+0.0)/(ratings_count+0.0), 1) as avg_rating").order("avg_rating DESC").limit(top)
+  end
 end
 
