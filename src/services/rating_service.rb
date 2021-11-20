@@ -3,14 +3,9 @@ require_relative '../../db/connection'
 class RatingService
   def self.call(env)
     req = Rack::Request.new(env)
-    p req.params
-    if req.get?
-      return bad_request
-    end
     
-    if !req.params['post_id']
-      return bad_request
-    end
+    return bad_request if req.get?
+    return bad_request if !req.params['post_id']
     
     Post.with_transaction do
       @post = Post.lock('FOR UPDATE NOWAIT').where(['id = ?', req.params['post_id']]).first;

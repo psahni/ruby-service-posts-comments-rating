@@ -2,6 +2,8 @@ require 'rack'
 require 'json'
 
 require './src/services/post_service'
+require './src/services/rating_service'
+require './src/services/comment_service'
 
 handler = Rack::Handler::Thin
 
@@ -24,7 +26,7 @@ app = Rack::Builder.new do |builder|
   end
   map "/comments" do
     use Rack::Lint
-    run RatingService
+    run CommentService
   end
   builder.run RackApp.new
 end
