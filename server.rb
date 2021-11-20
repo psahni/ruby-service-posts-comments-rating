@@ -22,6 +22,10 @@ app = Rack::Builder.new do |builder|
     use Rack::Lint
     run RatingService
   end
+  map "/comments" do
+    use Rack::Lint
+    run RatingService
+  end
   builder.run RackApp.new
 end
 

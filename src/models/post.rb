@@ -1,4 +1,4 @@
-class Post  < ActiveRecord::Base
+class Post < ActiveRecord::Base
   attr_accessor :ratings_value
   attr_writer :is_update_rating
 
