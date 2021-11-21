@@ -12,6 +12,5 @@ db_config_file = File.open('db/database.yml')
 db_config = YAML::load(db_config_file)
 
 
-puts "==> Estabalish Connection:"
+puts "==> Estabalish DB Connection"
 ActiveRecord::Base.establish_connection(db_config[env])
-puts "==> Connection estabalished"
