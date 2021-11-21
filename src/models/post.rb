@@ -56,7 +56,7 @@ class Post < ActiveRecord::Base
 
   def self.grouped_by_ip
     grouped_data = {};
-    posts = Post.select("ip, username");
+    posts = Post.select("ip, username").group("ip, username");
     posts.each do |post|
       grouped_data[post.ip] = (grouped_data[post.ip] || []).push(post.username)
     end
