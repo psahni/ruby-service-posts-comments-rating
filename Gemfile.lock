@@ -19,6 +19,8 @@ GEM
     et-orbi (1.2.6)
       tzinfo
     eventmachine (1.2.7)
+    faker (2.19.0)
+      i18n (>= 1.6, < 2)
     fugit (1.5.2)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
@@ -59,6 +61,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   builder
+  faker
   json
   pg
   rspec

@@ -25,7 +25,7 @@ class Post < ActiveRecord::Base
   end
 
   def get_average_rating
-    (ratings_sum/ratings_count.to_f).round(1)
+    (ratings_sum/ratings_count.to_f).round(1) rescue 0
   end
 
   def validate_rating
@@ -56,11 +56,10 @@ class Post < ActiveRecord::Base
 
   def self.grouped_by_ip
     grouped_data = {};
-    posts = Post.select("ip, username").group("ip, username");
+    posts = select("ip, username").group("ip, username");
     posts.each do |post|
       grouped_data[post.ip] = (grouped_data[post.ip] || []).push(post.username)
     end
     grouped_data
   end
 end
-
