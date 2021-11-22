@@ -6,7 +6,7 @@ Dir.glob('./src/**/*.rb').each do |file|
   require file
 end
 
-env = 'development'
+env = ENV["RACK_ENV"]
 
 db_config_file = File.open('db/database.yml')
 db_config = YAML::load(db_config_file)
