@@ -114,3 +114,5 @@ when 'post_feedback'
 when 'user_feedback'
   create_user_feedbacks
 end
+
+#  ruby db/seeds.rb user_feedback 
