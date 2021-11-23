@@ -3,7 +3,7 @@ require_relative 'feedback_job'
 
 scheduler = Rufus::Scheduler.new
 
-scheduler.cron '30 16 * * *' do
+scheduler.cron '00 09 * * *' do
   puts "==> Generating xml"
   puts Time.now.to_s
   job  = FeedbackJob.new
