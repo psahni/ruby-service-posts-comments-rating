@@ -3,7 +3,7 @@ require 'faker'
 require_relative './connection'
 require_relative '../src/models/post'
 
-fake_ips = %w( 
+@fake_ips = %w( 
 13.217.99.238
 184.144.125.131
 230.142.29.79
@@ -57,7 +57,8 @@ fake_ips = %w(
 )
 
 def create_post
-  (1..20000).each do |i|
+  p @fake_ips
+  (1..50000).each do |i|
     puts "Creating Post #{i}"
     post = Post.new({
       username: Faker::Name.unique.name.gsub(/\s+/, '').downcase,
@@ -65,7 +66,7 @@ def create_post
       content: Faker::Lorem.paragraph(sentence_count: 5),
       ratings_sum: rand(90..210),
       ratings_count: rand(45..50),
-      ip: fake_ips[rand(fake_ips.length)]
+      ip: @fake_ips[rand(@fake_ips.length)]
     })
 
     post.save!
@@ -108,9 +109,9 @@ end
 
 case ARGV[0]
 when 'post'
-  create_post_feedbacks
-when 'post_feedback'
   create_post
+when 'post_feedback'
+  create_post_feedbacks
 when 'user_feedback'
   create_user_feedbacks
 end

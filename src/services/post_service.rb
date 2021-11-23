@@ -22,7 +22,7 @@ class PostService
 
     # GET POSTS /posts
     if req.get?
-      return [200, Constants::CONTENT_TYPE, [Post.all.to_json]]
+      return [200, Constants::CONTENT_TYPE, [Post.select("id, title, content, username, avg_rating").to_json]]
     end
     
     # CREATE POST /posts

@@ -38,8 +38,10 @@ class Post < ActiveRecord::Base
     self.is_update_rating = true
     self.ratings_value = value
     return self if ratings_value.blank?
+    
     self.ratings_sum = self.ratings_sum + self.ratings_value.to_i
     self.ratings_count = self.ratings_count + 1
+    self.avg_rating = get_average_rating
     self
   end
 
@@ -51,7 +53,8 @@ class Post < ActiveRecord::Base
 
   def self.top_posts(top)
     return [] if top.blank? or top.to_i == 0
-    select("id, content, ROUND((ratings_sum+0.0)/(ratings_count+0.0), 1) as avg_rating").order("avg_rating DESC").limit(top)
+    # select("id, content, ROUND((ratings_sum+0.0)/(ratings_count+0.0), 1) as avg_rating").where("ratings_count > 0").order("avg_rating DESC").limit(top)
+    select("id, content, avg_rating").where("ratings_count > 0").order("avg_rating DESC").limit(top)
   end
 
   def self.grouped_by_ip
@@ -61,5 +64,12 @@ class Post < ActiveRecord::Base
       grouped_data[post.ip] = (grouped_data[post.ip] || []).push(post.username)
     end
     grouped_data
+  end
+
+  def self.update_avg_rating
+    Post.all.where("avg_rating is NULL").each do |post|
+      post.avg_rating = post.get_average_rating
+      post.save!
+    end
   end
 end
