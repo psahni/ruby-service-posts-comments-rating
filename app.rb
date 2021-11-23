@@ -37,5 +37,6 @@ class App
     build
     handler = Rack::Handler::Thin
     handler.run @app
+    handler
   end
 end

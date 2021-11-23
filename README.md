@@ -1,3 +1,14 @@
+### Create database
+
+```
+  CREATE DATABASE umai_dev
+```
+### Take the schema dump
+
+```
+  psql -U <username> -d umai_dev -f dump.sql
+```
+
 ### Run the server
 
 ```

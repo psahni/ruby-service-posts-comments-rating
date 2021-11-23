@@ -64,6 +64,7 @@ DEPENDENCIES
   faker
   json
   pg
+  rack
   rspec
   rufus-scheduler
   thin
