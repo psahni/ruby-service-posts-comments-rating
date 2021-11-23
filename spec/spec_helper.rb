@@ -1,5 +1,4 @@
 require 'net/http'
-require 'spec_helper'
 
 module Helpers
   attr_reader :status, :response

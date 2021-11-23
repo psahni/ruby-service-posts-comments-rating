@@ -1,5 +1,5 @@
 require 'thin'
-
+require 'rspec'
 require_relative './spec_helper'
 require_relative '../app'
 
@@ -33,7 +33,6 @@ describe App do
   end
 
   describe '/posts' do
-
     after do
       Post.where(username: 'psTest').delete_all
       User.where(username: 'psTest').delete_all
@@ -68,6 +67,14 @@ describe App do
       expect(status).to eq(200)
       post = JSON.parse(response)
       expect(post).to_not be_nil
+    end
+
+    it ('should get me top post') do
+      GET("/posts?top=5")
+      expect(status).to eq(200)
+      posts = JSON.parse(response.body)
+      max_rating = Post.select("max(avg_rating) as avg_rating").where("ratings_count > 0")[0].avg_rating.to_s
+      expect(posts[0]['avg_rating'].to_s).to eq(max_rating)
     end
   end
 end
